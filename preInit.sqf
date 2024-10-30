@@ -89,13 +89,18 @@ tsp_fnc_killhouse = {
     } forEach _helpers;
     {hideObjectGlobal _x} forEach _helpers; 
  
-    //-- Fill some of the holes with doors
-    {if (random 1 < _doorChance) then {sleep _sleep;
-        _door = createVehicle [selectRandom _doorTypes, [0,0,0], [], 0, "CAN_COLLIDE"]; _door attachTo [_x, [0,0,0]]; detach _door; _door allowDamage false;
-        if (random 1 < _lockChance) then {_door setVariable ["bis_disabled_Door_0", true, true]};
-        if (random 1 > 0.5) then {_door setDir (getDir _door + 180)};
-        _doors pushBack _door; 
-    }} forEach _openings;
+   //-- Fill some of the holes with doors
+{if (random 1 < _doorChance) then {sleep _sleep;
+    _door = createVehicle [selectRandom _doorTypes, [0,0,0], [], 0, "CAN_COLLIDE"]; 
+    _door attachTo [_x, [0,0,0]]; 
+    detach _door; 
+    _door allowDamage false;
+    if (random 1 < _lockChance) then {
+        _door setVariable ["bis_disabled_Door_1", 1, true];  // Changed from "bis_disabled_Door_0" to "bis_disabled_Door_1"
+    };
+    if (random 1 > 0.5) then {_door setDir (getDir _door + 180)};
+    _doors pushBack _door; 
+}} forEach _openings;
 
     _rooms = [];
     {_rooms pushBack (nearestObjects[_start, [_x], (_width max _height)*_wallLength + 20])} forEach _helperTypes;  //-- Create array from _helpers but ordered by room
@@ -121,6 +126,11 @@ tsp_fnc_killhouse = {
             _group = createGroup _enemySide; _group deleteGroupWhenEmpty true; 
             _enemy = _group createUnit [selectRandom _enemyTypes, getPos _helper, [], 1, "CAN_COLLIDE"]; _enemy attachTo [_helper, [0,0,0]]; detach _enemy; 
             _enemy setFormDir (_helper getDir _furthest); _enemy setDir (_helper getDir _furthest); _enemy setUnitPos (selectRandom ["UP", "MIDDLE"]); _units pushBack _enemy; sleep _sleep;
+            {
+                if ((_x select 0) call BIS_fnc_isThrowable) then {
+                    _enemy removeMagazines (_x select 0)
+                };
+            }forEach magazinesAmmo _enemy;
             if (random 1 < _hostageChance) then {  //-- Hostages
                 _group = createGroup civilian; _group deleteGroupWhenEmpty true;
                 _hostage = _group createUnit [selectRandom _civilTypes, getPos _helper, [], 1, "CAN_COLLIDE"]; _hostage attachTo [_enemy, [0,0.5,0]]; detach _hostage; 
@@ -172,6 +182,7 @@ tsp_fnc_killhouse_flood = {  //-- Fucky wucky recursive stuff below
     _neighbours = (_helper nearObjects _wallLength) select {(typeOf _x) in _helperTypes && count (lineIntersectsSurfaces [getPosASL _helper, getPosASL _x, _helper, _x]) == 0};  //-- Get unhit neighbours
     {if !(_x in tsp_kh_hits) then {[_x, _helperTypes, _wallLength, _end, _sleep] call tsp_fnc_killhouse_flood}} forEach _neighbours;  //-- Recursion on neighbours
 };
+
 
 enemy_altis = ["O_G_Soldier_AR_F","O_G_medic_F","O_G_Soldier_GL_F","O_G_Soldier_M_F","O_G_officer_F","O_G_Soldier_F","O_G_Soldier_lite_F","O_G_Soldier_SL_F","O_G_Soldier_TL_F"];
 enemy_tanoa = ["I_C_Soldier_Bandit_7_F","I_C_Soldier_Bandit_3_F","I_C_Soldier_Bandit_5_F","I_C_Soldier_Bandit_1_F","I_C_Soldier_Bandit_4_F","I_C_Soldier_Bandit_8_F","I_C_Soldier_Para_7_F","I_C_Soldier_Para_2_F","I_C_Soldier_Para_4_F","I_C_Soldier_Para_1_F"];
