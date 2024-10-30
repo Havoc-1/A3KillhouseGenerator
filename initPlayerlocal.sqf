@@ -1,4 +1,3 @@
-
 // TSP Killhouse Generation
 private _createKillhouseActions = {
     params ["_object", "_start", "_end", "_area", "_khNumber"];
