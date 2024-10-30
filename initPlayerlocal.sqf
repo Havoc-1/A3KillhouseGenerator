@@ -103,3 +103,112 @@ private _createKillhouseActions = {
 // Add actions to each generator
 [kh1_generator, kh1_start, kh1_end, kh1_area, 1] call _createKillhouseActions;
 [kh2_generator, kh2_start, kh2_end, kh2_area, 2] call _createKillhouseActions;
+
+// Create ACE actions for Killhouse 1 light switch
+private _mainAction1 = [
+    "LightControl_1",
+    "Killhouse 1 Lights",
+    "a3\3den\data\displays\display3den\toolbar\flashlight_off_ca.paa",
+    {},
+    {true}
+] call ace_interact_menu_fnc_createAction;
+
+[lightSwitch1, 0, ["ACE_MainActions"], _mainAction1] call ace_interact_menu_fnc_addActionToObject;
+
+// Turn On action for Killhouse 1
+private _turnOnAction1 = [
+    "TurnOn_1",
+    "Turn On Lights",
+    "a3\3den\data\controls\ctrlcheckbox\baseline_texturechecked_ca.paa",
+    {
+        params ["_target"];
+        // Show lights for killhouse 1
+        for "_i" from 1 to 5 do {
+            private _light = missionNamespace getVariable [format["kh1_l%1", _i], objNull];
+            if (!isNull _light) then {
+                _light hideObjectGlobal false;
+            };
+        };
+        // Play switch sound
+        playSound "FD_Target_PopDown_Large_F";
+    },
+    {true}
+] call ace_interact_menu_fnc_createAction;
+
+[lightSwitch1, 0, ["ACE_MainActions", "LightControl_1"], _turnOnAction1] call ace_interact_menu_fnc_addActionToObject;
+
+// Turn Off action for Killhouse 1
+private _turnOffAction1 = [
+    "TurnOff_1",
+    "Turn Off Lights",
+    "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_cancel_ca.paa",
+    {
+        params ["_target"];
+        // Hide lights for killhouse 1
+        for "_i" from 1 to 5 do {
+            private _light = missionNamespace getVariable [format["kh1_l%1", _i], objNull];
+            if (!isNull _light) then {
+                _light hideObjectGlobal true;
+            };
+        };
+        playSound "FD_Target_PopDown_Large_F";
+    },
+    {true}
+] call ace_interact_menu_fnc_createAction;
+
+[lightSwitch1, 0, ["ACE_MainActions", "LightControl_1"], _turnOffAction1] call ace_interact_menu_fnc_addActionToObject;
+
+// Killhouse 2 light switch
+private _mainAction2 = [
+    "LightControl_2", 
+    "Killhouse 2 Lights",
+    "a3\3den\data\displays\display3den\toolbar\flashlight_off_ca.paa",
+    {},
+    {true}
+] call ace_interact_menu_fnc_createAction;
+
+[lightSwitch2, 0, ["ACE_MainActions"], _mainAction2] call ace_interact_menu_fnc_addActionToObject;
+
+// Turn On action for Killhouse 2
+private _turnOnAction2 = [
+    "TurnOn_2",
+    "Turn On Lights",
+    "a3\3den\data\controls\ctrlcheckbox\baseline_texturechecked_ca.paa",
+    {
+        params ["_target"];
+        // Show lights for killhouse 2
+        for "_i" from 1 to 5 do {
+            private _light = missionNamespace getVariable [format["kh2_l%1", _i], objNull];
+            if (!isNull _light) then {
+                _light hideObjectGlobal false;
+            };
+        };
+        // Play switch sound
+        playSound "FD_Target_PopDown_Large_F";
+    },
+    {true}
+] call ace_interact_menu_fnc_createAction;
+
+[lightSwitch2, 0, ["ACE_MainActions", "LightControl_2"], _turnOnAction2] call ace_interact_menu_fnc_addActionToObject;
+
+// Turn Off action for Killhouse 2
+private _turnOffAction2 = [
+    "TurnOff_2",
+    "Turn Off Lights",
+    "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_cancel_ca.paa",
+    {
+        params ["_target"];
+        // Hide lights for killhouse 2
+        for "_i" from 1 to 5 do {
+            private _light = missionNamespace getVariable [format["kh2_l%1", _i], objNull];
+            if (!isNull _light) then {
+                _light hideObjectGlobal true;
+            };
+        };
+        // Play switch sound
+        playSound "FD_Target_PopDown_Large_F";
+    },
+    {true}
+] call ace_interact_menu_fnc_createAction;
+
+[lightSwitch2, 0, ["ACE_MainActions", "LightControl_2"], _turnOffAction2] call ace_interact_menu_fnc_addActionToObject;

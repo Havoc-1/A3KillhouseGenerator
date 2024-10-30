@@ -461,13 +461,18 @@ tsp_fnc_killhouse = {
             _enemy setFormDir (_helper getDir _furthest);
             _enemy setDir (_helper getDir _furthest);
             _enemy setUnitPos (selectRandom ["UP", "MIDDLE"]);
+
+            // Disable AI movement and pathfinding so they don't walk through walls
+            _enemy disableAI "MOVE";
+            _enemy disableAI "PATH";
             _units pushBack _enemy;
             sleep _sleep;
 
-            // Remove throwable items
+            // Remove smoke grenades but keep frags, classnames based on vanilla factions
             {
-                if ((_x select 0) call BIS_fnc_isThrowable) then {
-                    _enemy removeMagazines (_x select 0)
+                private _magazineClass = _x select 0;
+                if ((_magazineClass call BIS_fnc_isThrowable) && !(_magazineClass in ["HandGrenade", "MiniGrenade"])) then {
+                    _enemy removeMagazines _magazineClass;
                 };
             } forEach magazinesAmmo _enemy;
 
@@ -610,7 +615,7 @@ tsp_fnc_killhouse = {
             side _x == _enemySide &&
             _x inArea _area
         }) + _targetChance == 0) ||
-        (_start getVariable "reset") ||
+         (_start getVariable "reset") ||
         ((count (allPlayers select {_x inArea _area}) == (count (allPlayers select {_x inArea _area && _x getVariable ["ACE_isUnconscious", false]}))) && (count (allPlayers select {_x inArea _area}) > 0))
     };
 
@@ -621,10 +626,17 @@ tsp_fnc_killhouse = {
         
         // Play completion sound
         playSound3D [
-            "A3\Missions_F_Oldman\Data\sound\beep.ogg",
+            "a3\missions_f_beta\data\sounds\firing_drills\course_active.wss",
             _end,
             false,
             getPosASL _end,
+            5, 1, 100
+        ];
+        playSound3D [
+            "a3\missions_f_beta\data\sounds\firing_drills\course_active.wss",
+            _start,
+            false,
+            getPosASL _start,
             5, 1, 100
         ];
     };
