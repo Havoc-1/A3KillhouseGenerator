@@ -610,7 +610,8 @@ tsp_fnc_killhouse = {
             side _x == _enemySide &&
             _x inArea _area
         }) + _targetChance == 0) ||
-        _start getVariable "reset"
+        (_start getVariable "reset") ||
+        ((count (allPlayers select {_x inArea _area}) == (count (allPlayers select {_x inArea _area && _x getVariable ["ACE_isUnconscious", false]}))) && (count (allPlayers select {_x inArea _area}) > 0))
     };
 
     // Show clear message if not reset
@@ -635,8 +636,14 @@ tsp_fnc_killhouse = {
             alive _x &&
             _x inArea _area
         }) == 0 ||
-        _start getVariable "reset"
+        _start getVariable "reset" ||
+        ((count (allPlayers select {_x inArea _area}) == (count (allPlayers select {_x inArea _area && _x getVariable ["ACE_isUnconscious", false]}))) && (count (allPlayers select {_x inArea _area}) > 0))
     };
+
+    {
+        _x setPosATL ([[[getPos kh1_generator, 10]], []] call BIS_fnc_randomPos);
+        [_x] call Rev_fnc_heal;
+    } forEach (allPlayers select {_x inArea _area && _x getVariable ["ACE_isUnconscious", false]});
 
     // Final cleanup
     {[_x,1,0] call bis_fnc_door} forEach (
