@@ -124,7 +124,7 @@ private _turnOnAction1 = [
         playSound "FD_Target_PopDown_Large_F";
     },
     {true},
-    {}.
+    {},
     [lights_kh1]
 ] call ace_interact_menu_fnc_createAction;
 
