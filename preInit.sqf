@@ -647,35 +647,29 @@ tsp_fnc_killhouse = {
             getPosASL _start,
             5, 1, 100
         ];
-
-        // Heal all players in the area 
-        {
-            [_x] call Rev_fnc_heal;
-            if (_x getVariable ["ACE_isUnconscious", false]) then {
-                _x switchMove "";
-                _x playMoveNow "";
-            } else {
-                diag_log format ["%1 is not unconscious.", _x];
-            };
-        } forEach (allPlayers select {_x inArea _area});
     };
 
     // Wait for area to be clear or reset
     waitUntil {
         sleep 0.5;
-        count (allPlayers select {
-            alive _x &&
-            _x inArea _area
-        }) == 0 ||
+        count (allPlayers select {alive _x && _x inArea _area}) == 0 ||
         _start getVariable "reset" ||
         ((count (allPlayers select {_x inArea _area}) == (count (allPlayers select {_x inArea _area && _x getVariable ["ACE_isUnconscious", false]}))) && (count (allPlayers select {_x inArea _area}) > 0))
-
     };
 
     {
-        _x setPosATL ([[[getPos kh1_generator, 7]], []] call BIS_fnc_randomPos);
-        [_x] call Rev_fnc_heal;
-    } forEach (allPlayers select {_x inArea _area && _x getVariable ["ACE_isUnconscious", false]});
+        if (_x getVariable ["ACE_isUnconscious", false]) then {
+            [_x] spawn {
+                params ["_unit"];
+                sleep 3;
+                _unit setPosATL ([[[getPos kh1_generator, 7]], []] call BIS_fnc_randomPos);
+                [_unit] call Rev_fnc_heal;
+                _unit switchMove "";
+            };
+        } else {
+            [_x] call Rev_fnc_heal;
+        };
+    } forEach (allPlayers select {_x inArea _area});
 
     // Final cleanup
     {[_x,1,0] call bis_fnc_door} forEach (
