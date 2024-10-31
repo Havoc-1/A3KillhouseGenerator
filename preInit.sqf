@@ -513,7 +513,7 @@ tsp_fnc_killhouse = {
             detach _civilian;
             
             _civilian setFormDir (_helper getDir _furthest);
-            _civilian setUnitPos (selectRandom ["UP", "MIDDLE","PRONE"]);
+            _civilian setUnitPos (selectRandom ["UP", "MIDDLE","DOWN"]);
             _civilian disableAI "MOVE";
             _units pushBack _civilian;
             sleep _sleep;
@@ -607,9 +607,15 @@ tsp_fnc_killhouse = {
     } forEach (allPlayers select {_x distance _start < _height});
     deleteVehicle _blocker;
 
-    // Wait for killhouse to be cleared or reset
+    // Completion check | All enemies are defeated | All players in the area are uncon and force reset
     waitUntil {
         sleep 0.5;
+
+        // Check for all unconscious first and set reset flag if true
+        if ((count (allPlayers select {_x inArea _area}) == (count (allPlayers select {_x inArea _area && _x getVariable ["ACE_isUnconscious", false]}))) && (count (allPlayers select {_x inArea _area}) > 0)) then {
+            _start setVariable ["reset", true, true];
+        };
+
         (count (allUnits select {
             alive _x &&
             side _x == _enemySide &&
@@ -624,6 +630,11 @@ tsp_fnc_killhouse = {
         {["", "Killhouse Clear!"] remoteExec ["BIS_fnc_showSubtitle", _x]
         } forEach (allPlayers select {_x distance _end < (_height*2)});
         
+        // Heal all players in the area immediately upon completion
+        {
+            [_x] call Rev_fnc_heal;
+        } forEach (allPlayers select {_x inArea _area});
+
         // Play completion sound
         playSound3D [
             "a3\missions_f_beta\data\sounds\firing_drills\course_active.wss",
@@ -670,7 +681,8 @@ tsp_fnc_killhouse = {
             [_x] call Rev_fnc_heal;
         };
     } forEach (allPlayers select {_x inArea _area});
-
+       
+    
     // Final cleanup
     {[_x,1,0] call bis_fnc_door} forEach (
         (_start nearObjects [_outerDoorType, 5]) +
@@ -706,8 +718,8 @@ enemy_livonia = ["I_L_Criminal_SG_F","I_L_Criminal_SMG_F","I_L_Hunter_F","I_L_Lo
 civ_altis = ["C_man_polo_1_F","C_man_polo_2_F","C_man_polo_3_F","C_man_polo_4_F","C_man_polo_5_F","C_man_polo_6_F","C_Man_Fisherman_01_F","C_man_p_fugitive_F"];
 civ_tanoa = ["C_Man_casual_1_F_tanoan","C_Man_casual_2_F_tanoan","C_Man_casual_3_F_tanoan","C_man_sport_1_F_tanoan","C_man_sport_2_F_tanoan","C_man_sport_3_F_tanoan","C_Man_casual_4_F_tanoan","C_Man_casual_5_F_tanoan","C_Man_casual_6_F_tanoan"];
 civ_livonia = ["C_Man_1_enoch_F","C_Man_2_enoch_F","C_Man_3_enoch_F","C_Man_4_enoch_F","C_Man_5_enoch_F","C_Man_6_enoch_F","C_Farmer_01_enoch_F"];
-lights_kh1 = ["kh1_l1", "kh1_l2", "kh1_l3", "kh1_l4", "kh1_l5"];
-lights_kh2 = ["kh2_l1", "kh2_l2", "kh2_l3", "kh2_l4", "kh2_l5"];
+lights_kh1 = [kh1_l1, kh1_l2, kh1_l3, kh1_l4, kh1_l5];
+lights_kh2 = [kh2_l1, kh2_l2, kh2_l3, kh2_l4, kh2_l5];
 
 // Furniture Arrays
 furniture_altis = [
