@@ -639,6 +639,25 @@ tsp_fnc_killhouse = {
             getPosASL _start,
             5, 1, 100
         ];
+        //Make another sound source to play from
+         playSound3D [
+            "a3\missions_f_beta\data\sounds\firing_drills\course_active.wss",
+            _start,
+            false,
+            getPosASL _start,
+            5, 1, 100
+        ];
+
+        // Heal all players in the area 
+        {
+            [_x] call Rev_fnc_heal;
+            if (_x getVariable ["ACE_isUnconscious", false]) then {
+                _x switchMove "";
+                _x playMoveNow "";
+            } else {
+                diag_log format ["%1 is not unconscious.", _x];
+            };
+        } forEach (allPlayers select {_x inArea _area});
     };
 
     // Wait for area to be clear or reset
@@ -650,10 +669,11 @@ tsp_fnc_killhouse = {
         }) == 0 ||
         _start getVariable "reset" ||
         ((count (allPlayers select {_x inArea _area}) == (count (allPlayers select {_x inArea _area && _x getVariable ["ACE_isUnconscious", false]}))) && (count (allPlayers select {_x inArea _area}) > 0))
+
     };
 
     {
-        _x setPosATL ([[[getPos kh1_generator, 10]], []] call BIS_fnc_randomPos);
+        _x setPosATL ([[[getPos kh1_generator, 7]], []] call BIS_fnc_randomPos);
         [_x] call Rev_fnc_heal;
     } forEach (allPlayers select {_x inArea _area && _x getVariable ["ACE_isUnconscious", false]});
 
@@ -692,6 +712,8 @@ enemy_livonia = ["I_L_Criminal_SG_F","I_L_Criminal_SMG_F","I_L_Hunter_F","I_L_Lo
 civ_altis = ["C_man_polo_1_F","C_man_polo_2_F","C_man_polo_3_F","C_man_polo_4_F","C_man_polo_5_F","C_man_polo_6_F","C_Man_Fisherman_01_F","C_man_p_fugitive_F"];
 civ_tanoa = ["C_Man_casual_1_F_tanoan","C_Man_casual_2_F_tanoan","C_Man_casual_3_F_tanoan","C_man_sport_1_F_tanoan","C_man_sport_2_F_tanoan","C_man_sport_3_F_tanoan","C_Man_casual_4_F_tanoan","C_Man_casual_5_F_tanoan","C_Man_casual_6_F_tanoan"];
 civ_livonia = ["C_Man_1_enoch_F","C_Man_2_enoch_F","C_Man_3_enoch_F","C_Man_4_enoch_F","C_Man_5_enoch_F","C_Man_6_enoch_F","C_Farmer_01_enoch_F"];
+lights_kh1 = ["kh1_l1", "kh1_l2", "kh1_l3", "kh1_l4", "kh1_l5"];
+lights_kh2 = ["kh2_l1", "kh2_l2", "kh2_l3", "kh2_l4", "kh2_l5"];
 
 // Furniture Arrays
 furniture_altis = [
