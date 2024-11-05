@@ -69,7 +69,7 @@ tsp_fnc_killhouse = {
         ["_index", 0],        // Room counter
         ["_doors", []],       // Created doors
         ["_walls", []],       // Created walls
-        ["_furniture", []]    // Placed furniture
+        ["_furniture", []]   // Placed furniture
     ];
 
 // SECTION 1: INITIALIZATION AND SAFETY CHECKS
@@ -425,7 +425,7 @@ tsp_fnc_killhouse = {
             // Add hit sound effect
             _target addEventHandler ["HitPart", {
                 playSound3D [
-                    "tsp_core\data\gong.ogg",
+                    "a3\missions_f_beta\data\sounds\firing_drills\target_pop-down_large.wss",
                     (_this#0#0),
                     false,
                     getPosASL (_this#0#0),
@@ -649,15 +649,27 @@ tsp_fnc_killhouse = {
             false,
             getPosASL _start,
             5, 1, 100
-        ];
-        //Make another sound source to play from
-         playSound3D [
-            "a3\missions_f_beta\data\sounds\firing_drills\course_active.wss",
-            _start,
-            false,
-            getPosASL _start,
-            5, 1, 100
-        ];
+        ]; 
+        
+        // Play from speakers without passing new params because it breaks - REWORK | HARCODED SOLUTION NOT MODULAR
+        // Find the correct speaker 
+        private _speakers = if (_start == kh1_start) then {
+            [kh1_speaker1, kh1_speaker2]
+        } else {
+            [kh2_speaker1, kh2_speaker2]
+        };
+
+        {
+            playSound3D [
+                "a3\missions_f_beta\data\sounds\firing_drills\course_active.wss",
+                _x,
+                false,
+                getPosASL _x,
+                5, 1, 100
+            ];
+            // Debug 
+            // diag_log ["Playing sound on %1", _x];
+        } forEach _speakers;
     };
 
     // Wait for area to be clear or reset
@@ -673,6 +685,12 @@ tsp_fnc_killhouse = {
             [_x] spawn {
                 params ["_unit"];
                 sleep 3;
+                // Teleport to the correct KH gen - REWORK | HARCODED SOLUTION NOT MODULAR
+                private _generator = if (_area == kh1_area) then {
+                    kh1_generator 
+                } else {
+                    kh2_generator
+                };
                 _unit setPosATL ([[[getPos kh1_generator, 7]], []] call BIS_fnc_randomPos);
                 [_unit] call Rev_fnc_heal;
                 _unit switchMove "";

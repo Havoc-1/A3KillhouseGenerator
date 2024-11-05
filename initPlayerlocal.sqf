@@ -196,3 +196,8 @@ private _turnOffAction2 = [
 // Add actions to each generator
 [kh1_generator, kh1_start, kh1_end, kh1_area, 1] call _createKillhouseActions;
 [kh2_generator, kh2_start, kh2_end, kh2_area, 2] call _createKillhouseActions;
+
+// Attempt to passing speaker params option 
+/* [kh1_generator, kh1_start, kh1_end, kh1_area, 1, kh1_speaker1, kh1_speaker2] call _createKillhouseActions;
+[kh2_generator, kh2_start, kh2_end, kh2_area, 2, kh2_speaker1, kh2_speaker2] call _createKillhouseActions;
+*/
