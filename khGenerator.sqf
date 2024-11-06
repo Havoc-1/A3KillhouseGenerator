@@ -682,8 +682,8 @@ tsp_fnc_killhouse = {
 
     {
         if (_x getVariable ["ACE_isUnconscious", false]) then {
-            [_x] spawn {
-                params ["_unit"];
+            [_x, _area] spawn {
+                params ["_unit", "_area"];
                 sleep 3;
                 // Teleport to the correct KH gen - REWORK | HARCODED SOLUTION NOT MODULAR
                 private _generator = if (_area == kh1_area) then {
@@ -691,7 +691,7 @@ tsp_fnc_killhouse = {
                 } else {
                     kh2_generator
                 };
-                _unit setPosATL ([[[getPos kh1_generator, 7]], []] call BIS_fnc_randomPos);
+                _unit setPosATL ([[[getPos _generator, 7]], []] call BIS_fnc_randomPos);
                 [_unit] call Rev_fnc_heal;
                 _unit switchMove "";
             };
