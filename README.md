@@ -160,8 +160,8 @@ Each furniture entry follows the format:
 
 ## Authors 
 - [@ASmallDinosaur / @aarengibson](https://github.com/aarengibson)
-- [@Paperboathat](https://github.com/Paperboathat)
 - [@_keystone / @Havoc-1](https://github.com/Havoc-1)
+- [@Paperboathat](https://github.com/Paperboathat)
 - [@Reeveli](https://github.com/Reeveli) for his ACE healing function
 
 
