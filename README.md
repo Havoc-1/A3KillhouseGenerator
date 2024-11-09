@@ -33,7 +33,7 @@ A dynamic killhouse generation system for Arma 3 that creates randomized CQB kil
 ## Installation Methods
 
 1a. Download mission file / scripts from the repository **or**
-1b. Subscribe to the composition
+1b. Subscribe to the composition at [KillhouseComposition]()
 2. Copy the following files to your mission folder:
    - `init.sqf`
    - `initPlayerLocal.sqf`
