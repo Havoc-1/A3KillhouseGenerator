@@ -35,7 +35,7 @@ A dynamic killhouse generation system for Arma 3 that creates randomized CQB kil
 1a. Download mission file / scripts from the repository **or**
 
 
-1b. Subscribe to the composition at [KillhouseComposition](https://steamcommunity.com/sharedfiles/filedetails/?id=3362451857)
+1b. Subscribe to the composition at [Killhouse Generator](https://steamcommunity.com/sharedfiles/filedetails/?id=3362451857)
 
 
 2. Copy the following files to your mission folder:
@@ -154,6 +154,8 @@ Each furniture entry follows the format:
 - [@ASmallDinosaur / @aarengibson](https://github.com/aarengibson)
 - [@Paperboathat](https://github.com/Paperboathat)
 - [@_keystone / @Havoc-1](https://github.com/Havoc-1)
+- [@Reeveli](https://github.com/Reeveli) for his ACE healing function
+
 
 ## Acknowledgements
 ACE3 Team - Framework
