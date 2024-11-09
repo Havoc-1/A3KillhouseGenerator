@@ -632,7 +632,42 @@ tsp_fnc_killhouse = {
         
         // Heal all players in the area immediately upon completion
         {
-            [_x] call Rev_fnc_heal;
+            _x params ["_unit"];
+            if (_unit getVariable ["ACE_isUnconscious", false]) then {
+            [_unit] spawn {
+                params ["_unit"];
+                // Pulled from Reeveli's healing script 
+                private _players = call CBA_fnc_players;
+                if (_unit in _players) then {
+                    // Check if healing is needed
+                    private _bleeding = _unit call ace_medical_blood_fnc_isBleeding;
+                    private _blood_pressure = _unit call ace_medical_status_fnc_getBloodPressure;
+                    private _diastolic = (_blood_pressure select 0 != 80) || (_blood_pressure select 1 != 120);
+                    private _fractures = _unit call ACE_medical_ai_fnc_isInjured;
+                    
+                    if (_bleeding || _diastolic || _fractures) then {
+                        [objNull, _unit] remoteExec ["ace_medical_treatment_fnc_fullHeal", _unit];
+                    };
+                };
+                
+                _unit setDamage 0;
+                _unit switchMove "";
+            };
+            } else {
+                // Direct healing for conscious players
+                if (_x in (call CBA_fnc_players)) then {
+                    private _bleeding = _x call ace_medical_blood_fnc_isBleeding;
+                    private _blood_pressure = _x call ace_medical_status_fnc_getBloodPressure;
+                    private _diastolic = (_blood_pressure select 0 != 80) || (_blood_pressure select 1 != 120);
+                    private _fractures = _x call ACE_medical_ai_fnc_isInjured;
+                    
+                    if (_bleeding || _diastolic || _fractures) then {
+                        [objNull, _x] remoteExec ["ace_medical_treatment_fnc_fullHeal", _x];
+                    };
+                    
+                    _x setDamage 0;
+                };
+            };
         } forEach (allPlayers select {_x inArea _area});
 
         // Play completion sound
@@ -691,12 +726,39 @@ tsp_fnc_killhouse = {
                 } else {
                     kh2_generator
                 };
+                
                 _unit setPosATL ([[[getPos _generator, 7]], []] call BIS_fnc_randomPos);
-                [_unit] call Rev_fnc_heal;
+
+                private _players = call CBA_fnc_players;
+                if (_unit in _players) then {
+                    // Check if healing is needed
+                    private _bleeding = _unit call ace_medical_blood_fnc_isBleeding;
+                    private _blood_pressure = _unit call ace_medical_status_fnc_getBloodPressure;
+                    private _diastolic = (_blood_pressure select 0 != 80) || (_blood_pressure select 1 != 120);
+                    private _fractures = _unit call ACE_medical_ai_fnc_isInjured;
+                    
+                    if (_bleeding || _diastolic || _fractures) then {
+                        [objNull, _unit] remoteExec ["ace_medical_treatment_fnc_fullHeal", _unit];
+                    };
+                };
+                
+                _unit setDamage 0;
                 _unit switchMove "";
+
             };
         } else {
-            [_x] call Rev_fnc_heal;
+            if (_x in (call CBA_fnc_players)) then {
+                private _bleeding = _x call ace_medical_blood_fnc_isBleeding;
+                private _blood_pressure = _x call ace_medical_status_fnc_getBloodPressure;
+                private _diastolic = (_blood_pressure select 0 != 80) || (_blood_pressure select 1 != 120);
+                private _fractures = _x call ACE_medical_ai_fnc_isInjured;
+                
+                if (_bleeding || _diastolic || _fractures) then {
+                    [objNull, _x] remoteExec ["ace_medical_treatment_fnc_fullHeal", _x];
+                };
+                
+                _x setDamage 0;
+            };
         };
     } forEach (allPlayers select {_x inArea _area});
        
