@@ -29,10 +29,14 @@ A dynamic killhouse generation system for Arma 3 that creates randomized CQB kil
 
 - ACE3 Mod
 - CBA Mod
+- [Breach Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=3283645995)
 
 ## Installation Methods
 
-1a. Download mission file / scripts from the repository **or**
+1a. Download mission file / scripts from the repository 
+
+
+**or**
 
 
 1b. Subscribe to the composition at [Killhouse Generator](https://steamcommunity.com/sharedfiles/filedetails/?id=3362451857)
@@ -159,6 +163,8 @@ Each furniture entry follows the format:
 
 ## Acknowledgements
 ACE3 Team - Framework
+
+
 CBA Team - Settings framework
   
 ## License
