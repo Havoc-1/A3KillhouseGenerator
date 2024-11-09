@@ -33,7 +33,7 @@ A dynamic killhouse generation system for Arma 3 that creates randomized CQB kil
 
 ## Installation Methods
 
-1a. Download mission file / scripts from the repository 
+1a. Download mission file / scripts from the repository (Latest releases)
 
 
 **or**
@@ -52,13 +52,17 @@ A dynamic killhouse generation system for Arma 3 that creates randomized CQB kil
 	- Toggle Vertical mode to Sea Level (The straight arrow)  
 	- Toggle surface snapping to off (Arrows pointing outwards)
 
+
+![HEIGHT](https://github.com/user-attachments/assets/288f7407-cfcf-4dc7-8859-d3ca80f745a3)
+
+
 ## Usage
 
 ### Generator Interface
 
 The killhouse generator provides an ACE interaction menu with the following options:
 
-1. Select Map Theme:
+1. Select Map (Furniture set and Enemy Type):
    - Altis
    - Tanoa
    - Livonia
