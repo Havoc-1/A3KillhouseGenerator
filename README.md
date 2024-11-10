@@ -15,15 +15,32 @@ A dynamic killhouse generation system for Arma 3 that creates randomized CQB kil
 
 - **Training Modes**:
   - **Live Fire**: Populated with AI combatants
-  - **Target Practice**: Static targets for fundementals 
-  - Configurable door states (locked/unlocked percentages)
+  - **Target Practice**: Static targets for fundementals
 
-- **Quality of Life Features**:
-  - Light control system for each killhouse
-  - Automatic cleanup and reset when completed / failed 
-  - Player healing upon completion
-  - Unconscious player handling
-  - Sound effects for various events
+### ACE Handling
+- Generate killhouse
+  - Configurable door states (locked/unlocked percentages)
+ 
+    
+![KillGen](https://github.com/user-attachments/assets/9645574a-f70c-46a5-9f67-59933689fbc8)
+
+
+- Light control system for each killhouse
+
+
+  ![LightControl](https://github.com/user-attachments/assets/67adb8de-5790-4088-98a3-09e33320a252)
+
+
+- Automatic healing
+  - Upon completion / failure
+  - Exit stage
+  - Teleported back to generator if all players are unconcious
+ 
+
+![HealTP](https://github.com/user-attachments/assets/1a9cd102-d50f-472f-826d-f31837b52138) 
+
+  - Adjusted sound effects with additional sound sources
+  
 
 ## Dependency
 
