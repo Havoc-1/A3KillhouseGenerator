@@ -56,7 +56,7 @@ A dynamic killhouse generation system for Arma 3 that creates randomized CQB kil
 **or**
 
 
-1b. Subscribe to the composition at [Killhouse Generator](https://steamcommunity.com/sharedfiles/filedetails/?id=3362451857) - UNAVAILABLE
+1b. Subscribe to the composition at [Killhouse Generator](https://steamcommunity.com/sharedfiles/filedetails/?id=3362451857)
 
 
 2. Copy the following files to your mission folder:
