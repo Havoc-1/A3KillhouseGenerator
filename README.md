@@ -47,6 +47,8 @@ A dynamic killhouse generation system for Arma 3 that creates randomized CQB kil
 - ACE3 Mod
 - CBA Mod
 - [Breach Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=3283645995)
+- [Modular Shoothouse Parts](https://steamcommunity.com/sharedfiles/filedetails/?id=2975882889&searchtext=modular+shoothouse)
+- [O&T Expansion Eden](https://steamcommunity.com/sharedfiles/filedetails/?id=1923321700)
 
 ## Installation Methods
 
@@ -56,7 +58,7 @@ A dynamic killhouse generation system for Arma 3 that creates randomized CQB kil
 **or**
 
 
-1b. Subscribe to the composition at [Killhouse Generator](https://steamcommunity.com/sharedfiles/filedetails/?id=3362606241)
+1b. Subscribe to the mission on the workshop at [Killhouse Generator](https://steamcommunity.com/sharedfiles/filedetails/?id=3362606241)
 
 
 2. Copy the following files to your mission folder:
