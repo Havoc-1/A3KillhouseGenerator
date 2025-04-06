@@ -336,32 +336,18 @@ tsp_fnc_killhouse = {
 
     // SECTION 7: DOOR PLACEMENT
     
-    // Add doors to openings based on chance
+    // Add doors to openings based on chance - Fixed to prevent spawning too close to each other
     {
         if (random 1 < _doorChance) then {
             sleep _sleep;
-            // Create door
-            _door = createVehicle [
-                selectRandom _doorTypes,
-                [0,0,0],
-                [], 0, "CAN_COLLIDE"
-            ];
-            
-            // Position door
-            _door attachTo [_x, [0,0,0]];
+            _opening = _x;
+            _doorType = selectRandom (if (count (_doors select {_x distance2D _opening < _wallLength}) == 0) then {_doorTypes} else {_openDoorTypes});
+            _door = createVehicle [_doorType, [0,0,0], [], 0, "CAN_COLLIDE"];
+            _door attachTo [_opening, [0,0,0]];
             detach _door;
             _door allowDamage false;
-
-            // Random chance to lock door
-            if (random 1 < _lockChance) then {
-                _door setVariable ["bis_disabled_Door_1", 1, true];
-            };
-
-            // Random door direction
-            if (random 1 > 0.5) then {
-                _door setDir (getDir _door + 180)
-            };
-            
+            if (random 1 < _lockChance) then {_door setVariable ["bis_disabled_Door_1", 1, true]};
+            if (random 1 > 0.5) then {_door setDir (getDir _door + 180)};
             _doors pushBack _door;
         }
     } forEach _openings;
